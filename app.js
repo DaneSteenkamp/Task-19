@@ -52,3 +52,11 @@ app.delete("/api/delete/:id", (req, res) => {
 
 //The port that the server is running on
 app.listen(8080, () => console.log("listning on port 8080..."));
+
+const path = require("path");
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
